@@ -1,27 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" systemVersion="17A278a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tXr-a1-R10">
             <objects>
-                <viewController id="BV1-FR-VrT" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
-                    <arscnView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="BrB-h1-WRS">
+                <viewController id="BV1-FR-VrT" customClass="ViewController" customModule="HelloARWorld" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3qn-JA-MeX">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    </arscnView>
+                        <subviews>
+                            <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hBu-cA-Cga">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </arscnView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8TR-9f-aAW">
+                                <rect key="frame" x="20" y="617" width="70" height="30"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Daq-fS-8Jv"/>
+                                    <constraint firstAttribute="width" constant="70" id="Rbb-27-Crl"/>
+                                </constraints>
+                                <state key="normal" title="Add"/>
+                                <connections>
+                                    <action selector="addCube:" destination="BV1-FR-VrT" eventType="touchUpInside" id="rQy-3T-QZq"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="65c-94-wdf">
+                                <rect key="frame" x="110" y="617" width="70" height="30"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="70" id="GUS-Nn-4fO"/>
+                                    <constraint firstAttribute="height" constant="30" id="L84-R6-jPN"/>
+                                </constraints>
+                                <state key="normal" title="Remove"/>
+                                <connections>
+                                    <action selector="removeCube:" destination="BV1-FR-VrT" eventType="touchUpInside" id="jXI-AN-8bb"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oxr-o5-XzM">
+                                <rect key="frame" x="200" y="617" width="70" height="30"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="70" id="p6O-vh-ixY"/>
+                                </constraints>
+                                <state key="normal" title="Recolor"/>
+                                <connections>
+                                    <action selector="recolorCube:" destination="BV1-FR-VrT" eventType="touchUpInside" id="yFN-5a-cT8"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qob-Nq-prU">
+                                <rect key="frame" x="290" y="617" width="70" height="30"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="70" id="5mR-Ag-R5x"/>
+                                    <constraint firstAttribute="height" constant="30" id="DVX-5B-w8B"/>
+                                    <constraint firstAttribute="width" constant="70" id="Nhm-nC-G8y"/>
+                                </constraints>
+                                <state key="normal" title="Torus"/>
+                                <connections>
+                                    <action selector="addTorus:" destination="BV1-FR-VrT" eventType="touchUpInside" id="qMg-qD-z9z"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="hBu-cA-Cga" firstAttribute="bottom" secondItem="tBE-zx-601" secondAttribute="bottom" id="7HD-Hj-USx"/>
+                            <constraint firstItem="hBu-cA-Cga" firstAttribute="leading" secondItem="tBE-zx-601" secondAttribute="leading" id="7cG-nD-pDo"/>
+                            <constraint firstItem="65c-94-wdf" firstAttribute="leading" secondItem="8TR-9f-aAW" secondAttribute="trailing" constant="20" id="BXe-8x-Lda"/>
+                            <constraint firstItem="Oxr-o5-XzM" firstAttribute="leading" secondItem="65c-94-wdf" secondAttribute="trailing" constant="20" id="FsF-X4-cOv"/>
+                            <constraint firstItem="Qob-Nq-prU" firstAttribute="leading" secondItem="Oxr-o5-XzM" secondAttribute="trailing" constant="20" id="TDC-P4-ol7"/>
+                            <constraint firstItem="hBu-cA-Cga" firstAttribute="top" secondItem="3qn-JA-MeX" secondAttribute="top" id="TM9-MX-geM"/>
+                            <constraint firstItem="tBE-zx-601" firstAttribute="bottom" secondItem="65c-94-wdf" secondAttribute="bottom" constant="20" id="TnI-Da-qBt"/>
+                            <constraint firstItem="hBu-cA-Cga" firstAttribute="trailing" secondItem="tBE-zx-601" secondAttribute="trailing" id="V5q-XT-vYR"/>
+                            <constraint firstItem="tBE-zx-601" firstAttribute="bottom" secondItem="Qob-Nq-prU" secondAttribute="bottom" constant="20" id="a7s-75-f4O"/>
+                            <constraint firstItem="tBE-zx-601" firstAttribute="bottom" secondItem="8TR-9f-aAW" secondAttribute="bottom" constant="20" id="c9K-jY-dk5"/>
+                            <constraint firstItem="tBE-zx-601" firstAttribute="bottom" secondItem="Oxr-o5-XzM" secondAttribute="bottom" constant="20" id="gFf-76-1zq"/>
+                            <constraint firstItem="8TR-9f-aAW" firstAttribute="leading" secondItem="tBE-zx-601" secondAttribute="leading" constant="20" id="nLt-pH-zhM"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="tBE-zx-601"/>
+                    </view>
                     <connections>
-                        <outlet property="sceneView" destination="BrB-h1-WRS" id="5nT-qQ-ynl"/>
+                        <outlet property="sceneView" destination="hBu-cA-Cga" id="1md-5k-zMe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="136.80000000000001" y="133.5832083958021"/>
         </scene>
     </scenes>
 </document>
