@@ -13,6 +13,7 @@ import OpenGLES
 
 
 
+
 extension SCNNode {
     static func createLineNode(fromNode: SCNNode, toNode: SCNNode, color: UIColor) -> SCNNode {
         let line = lineFrom(vector: fromNode.position, toVector: toNode.position)
@@ -30,6 +31,7 @@ extension SCNNode {
         return SCNGeometry(sources: [source], elements: [element])
     }
 }
+
 
 class ViewController: UIViewController, ARSCNViewDelegate {
 
@@ -96,23 +98,23 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let x = CGFloat(0)
         let y = CGFloat(0)
         let z = CGFloat(0)
-        // Create the layer
-        let layer = CALayer()
-        layer.frame = CGRect(x: 0, y: 0, width: 1000, height: 1000)
-        layer.backgroundColor = UIColor.white.cgColor
-        layer.borderColor = UIColor.red.cgColor
-        layer.borderWidth = 5
-        
-        // Create a material from the layer and assign it
-        let material = SCNMaterial()
-        material.diffuse.contents = layer
-        material.isDoubleSided = true
+//        // Create the layer
+//        let layer = CALayer()
+//        layer.frame = CGRect(x: 0, y: 0, width: 1000, height: 1000)
+//        layer.backgroundColor = UIColor.white.cgColor
+//        layer.borderColor = UIColor.red.cgColor
+//        layer.borderWidth = 5
+//
+//        // Create a material from the layer and assign it
+//        let material = SCNMaterial()
+//        material.diffuse.contents = layer
+//        material.isDoubleSided = true
 
         
         let node = SCNNode()
         node.geometry = SCNBox(width: width, height: height, length: length, chamferRadius: 0)
-        //node.geometry?.firstMaterial?.diffuse.contents = UIColor.white
-        node.geometry?.materials = [material]
+        node.geometry?.firstMaterial?.diffuse.contents = UIColor.white
+        //node.geometry?.materials = [material]
         node.position = SCNVector3(x,y,z)
         self.sceneView.scene.rootNode.addChildNode(node)
 
@@ -131,16 +133,17 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
     }
     
+
     @IBAction func recolorCube(_ sender: UIButton) {
 
         if (!self.sceneView.scene.rootNode.childNodes.isEmpty){
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.01){
                 let node = self.sceneView.scene.rootNode.childNodes[0]
                 let color = node.geometry?.firstMaterial?.diffuse.contents
-                if ( UIColor.blue.isEqual(color)){
-                    node.geometry?.firstMaterial?.diffuse.contents = UIColor.red
-                } else {
+                if ( UIColor.white.isEqual(color)){
                     node.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
+                } else {
+                    node.geometry?.firstMaterial?.diffuse.contents = UIColor.white
                 }
             }
         }
@@ -152,6 +155,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         if (!self.sceneView.scene.rootNode.childNodes.isEmpty){
             self.sceneView.scene.rootNode.childNodes[0].removeFromParentNode()
         }
+//        drawPlane6()
     }
     
     
@@ -181,8 +185,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         movingParticle(r: r, x: x, y: y, z: z, width: width, height: height, duration: 1.5)
         movingParticle(r: r, x: x+width/2, y: y, z: z, width: width, height: height, duration: 1.5)
 
+        
+        
+
     }
     
+    // Draw normal line
     func drawLine(x1:CGFloat,y1:CGFloat,z1:CGFloat,x2:CGFloat,y2:CGFloat,z2:CGFloat,w:CGFloat,h:CGFloat,l:CGFloat){
 
         let start = SCNNode()
@@ -195,6 +203,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
     }
     
+    // Draw line using Box
     func drawLineWithStroke(x1:CGFloat,y1:CGFloat,z1:CGFloat,x2:CGFloat,y2:CGFloat,z2:CGFloat,
                             w:CGFloat,h:CGFloat,l:CGFloat){
         
@@ -205,12 +214,26 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         self.sceneView.scene.rootNode.addChildNode(node)
     }
     
+    // Draw line using bezierPath
+    func drawLineWithStroke2(x1:CGFloat,y1:CGFloat,z1:CGFloat,x2:CGFloat,y2:CGFloat,z2:CGFloat,
+                             w:CGFloat,h:CGFloat,l:CGFloat){
+        let path = UIBezierPath()
+        path.move(to: CGPoint(x: x1, y: y1))
+        path.addLine(to: CGPoint(x: x2, y: y2))
+        let node = SCNNode()
+        node.geometry = SCNShape(path: path, extrusionDepth: 0.002)
+        node.geometry?.firstMaterial?.diffuse.contents = UIColor.black
+        node.position = SCNVector3(x1/2+x2/2,y1/2+y2/2,z1/2+z2/2)
+        self.sceneView.scene.rootNode.addChildNode(node)
+        
+    }
+    
     func movingParticle(r: CGFloat, x: CGFloat, y:CGFloat, z:CGFloat, width: CGFloat, height: CGFloat, duration: Double){
         // particle
         let particle = SCNNode()
         particle.geometry = SCNSphere(radius: r)
         particle.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
-        particle.position = SCNVector3(-width/4,y,z)
+        particle.position = SCNVector3(x-width/4,y,z)
         self.sceneView.scene.rootNode.addChildNode(particle)
         
         // moving
@@ -221,6 +244,79 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let moveSequence = SCNAction.sequence([moveUp,moveDown])
         let moveLoop = SCNAction.repeatForever(moveSequence)
         particle.runAction(moveLoop)
+    }
+    
+    func drawPlane6(){
+        // variables
+        let r = CGFloat(0.1) //0.1
+        let pieces = 360
+        let height = CGFloat(0.05) //0.05
+        let p = CGFloat.pi //3.14
+        let w = (2*r*p)/CGFloat(pieces) //width 0.1046
+        let length = CGFloat(0.05)
+
+        // plane
+        firstQuadrant(w: w, height: height, pieces: pieces,length: length, r: r, p: p)
+        secondQuadrant(w: w, height: height, pieces: pieces, length: length, r: r, p: p)
+        thirdQuadrant(w: w, height: height, pieces: pieces, length: length, r: r, p: p)
+        fourthQuadrant(w: w, height: height, pieces: pieces, length: length, r: r, p: p)
+
+    }
+    
+    func fourthQuadrant(w: CGFloat, height: CGFloat, pieces: Int, length: CGFloat, r:CGFloat, p:CGFloat){
+        var i = CGFloat(pieces/2)
+        i = i-1
+        for _ in 1...pieces/4 {
+            let node = SCNNode()
+            node.geometry = SCNBox(width: w, height: height, length: length, chamferRadius: 0)
+            node.geometry?.firstMaterial?.diffuse.contents = UIColor.white
+            node.position = SCNVector3(r*CGFloat(sin(i*p/CGFloat(pieces))),0,r*CGFloat(cos(i*p/CGFloat(pieces))))
+            node.eulerAngles = SCNVector3(0,i*p/CGFloat(pieces),0)
+            self.sceneView.scene.rootNode.addChildNode(node)
+            i = i-2
+        }
+    }
+    
+    func firstQuadrant(w: CGFloat, height: CGFloat, pieces: Int, length: CGFloat, r:CGFloat, p:CGFloat){
+        var i = CGFloat(pieces/2)
+        i = i-1
+        for _ in 1...pieces/4 {
+            let node = SCNNode()
+            node.geometry = SCNBox(width: w, height: height, length: length, chamferRadius: 0)
+            node.geometry?.firstMaterial?.diffuse.contents = UIColor.yellow
+            node.position = SCNVector3(r*CGFloat(sin(i*p/CGFloat(pieces))),0,-r*CGFloat(cos(i*p/CGFloat(pieces))))
+            node.eulerAngles = SCNVector3(0,-i*p/CGFloat(pieces),0)
+            self.sceneView.scene.rootNode.addChildNode(node)
+            i = i-2
+        }
+    }
+
+    func thirdQuadrant(w: CGFloat, height: CGFloat, pieces: Int, length: CGFloat, r:CGFloat, p:CGFloat){
+        var i = CGFloat(pieces/2)
+        i = i-1
+        for _ in 1...pieces/4 {
+            let node = SCNNode()
+            node.geometry = SCNBox(width: w, height: height, length: length, chamferRadius: 0)
+            node.geometry?.firstMaterial?.diffuse.contents = UIColor.yellow
+            node.position = SCNVector3(-r*CGFloat(sin(i*p/CGFloat(pieces))),0,r*CGFloat(cos(i*p/CGFloat(pieces))))
+            node.eulerAngles = SCNVector3(0,-i*p/CGFloat(pieces),0)
+            self.sceneView.scene.rootNode.addChildNode(node)
+            i = i-2
+        }
+    }
+    
+    func secondQuadrant(w: CGFloat, height: CGFloat, pieces: Int, length: CGFloat, r:CGFloat, p:CGFloat){
+        var i = CGFloat(pieces/2)
+        i = i-1
+        for _ in 1...pieces/4 {
+            let node = SCNNode()
+            node.geometry = SCNBox(width: w, height: height, length: length, chamferRadius: 0)
+            node.geometry?.firstMaterial?.diffuse.contents = UIColor.white
+            node.position = SCNVector3(-r*CGFloat(sin(i*p/CGFloat(pieces))),0,-r*CGFloat(cos(i*p/CGFloat(pieces))))
+            node.eulerAngles = SCNVector3(0,i*p/CGFloat(pieces),0)
+            self.sceneView.scene.rootNode.addChildNode(node)
+            i = i-2
+        }
     }
     
     func session(_ session: ARSession, didFailWithError error: Error) {

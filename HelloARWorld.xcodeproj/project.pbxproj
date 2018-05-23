@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		221D1BDB20B344CA00CF49F0 /* Torus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221D1BDA20B344CA00CF49F0 /* Torus.swift */; };
 		22BB4FD120AB275500054F53 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BB4FD020AB275500054F53 /* AppDelegate.swift */; };
 		22BB4FD320AB275500054F53 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 22BB4FD220AB275500054F53 /* art.scnassets */; };
 		22BB4FD520AB275500054F53 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BB4FD420AB275500054F53 /* ViewController.swift */; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		221D1BDA20B344CA00CF49F0 /* Torus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Torus.swift; sourceTree = "<group>"; };
 		22BB4FCD20AB275500054F53 /* HelloARWorld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloARWorld.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22BB4FD020AB275500054F53 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		22BB4FD220AB275500054F53 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 				22BB4FD920AB275600054F53 /* Assets.xcassets */,
 				22BB4FDB20AB275600054F53 /* LaunchScreen.storyboard */,
 				22BB4FDE20AB275600054F53 /* Info.plist */,
+				221D1BDA20B344CA00CF49F0 /* Torus.swift */,
 			);
 			path = HelloARWorld;
 			sourceTree = "<group>";
@@ -260,6 +263,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				221D1BDB20B344CA00CF49F0 /* Torus.swift in Sources */,
 				22BB4FD520AB275500054F53 /* ViewController.swift in Sources */,
 				22BB4FD120AB275500054F53 /* AppDelegate.swift in Sources */,
 			);
